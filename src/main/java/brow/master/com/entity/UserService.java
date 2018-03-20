@@ -8,6 +8,10 @@ public class UserService {
     private String service;
     private String phone;
     private String email;
+    private String name;
+
+    public UserService() {
+    }
 
     public String getPhone() {
         return phone;
@@ -33,11 +37,6 @@ public class UserService {
         this.name = name;
     }
 
-    private String name;
-
-    public UserService() {
-    }
-
     public String getId() {
         return id;
     }
@@ -49,11 +48,11 @@ public class UserService {
     @Override
     public String toString() {
         return
-                "Time='" + time + '\'' +"\n"+
-                "Service='" + service + '\'' +"\n"+
-                "Phone='" + phone + '\'' +"\n"+
-                "Email='" + email + '\'' +"\n"+
-                "Name='" + name + '\'';
+                "Time='" + time + '\'' + "\n" +
+                        "Service='" + service + '\'' + "\n" +
+                        "Phone='" + phone + '\'' + "\n" +
+                        "Email='" + email + '\'' + "\n" +
+                        "Name='" + name + '\'';
     }
 
     @Override

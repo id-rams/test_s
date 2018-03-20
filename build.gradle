@@ -30,5 +30,6 @@ targetCompatibility = 1.8
 dependencies {
     compile group: "com.twilio.sdk", name: "twilio", version: "7.17.+"
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.apache.tomcat.embed:tomcat-embed-jasper")
     testCompile("junit:junit")
 }

@@ -1,16 +1,14 @@
 package brow.master.com;
 
+import brow.master.com.entity.Code;
+import brow.master.com.entity.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import brow.master.com.entity.Code;
-import brow.master.com.entity.UserService;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.UUID;
 
 @Controller
@@ -18,24 +16,32 @@ import java.util.UUID;
 public class CreateServiceController {
     private SmsSender smsSender;
     private UserService user;
-    private String verifyCode;
+    private String verifyCode = "1234";
 
     public static void main(String[] args) {
         SpringApplication.run(CreateServiceController.class, args);
 
     }
 
+
+    @CrossOrigin
     @RequestMapping(value = "/service", method = RequestMethod.POST)
     @ResponseBody
-    ResponseEntity<UserService> create(@RequestBody UserService userService) {
-        verifyCode = UUID.randomUUID().toString();
-        userService.setId(verifyCode);
-        smsSender = new SmsSender();
-        smsSender.sendSms(userService, "12345");
-        user = userService;
-        return new ResponseEntity<>(userService, HttpStatus.OK);
+    ResponseEntity<String> create(@RequestBody UserService userService) {
+
+        try {
+            System.out.println(userService);
+            userService.setId(UUID.randomUUID().toString());
+            smsSender = new SmsSender();
+            smsSender.sendSms(userService, verifyCode);
+            user = userService;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)
     @ResponseBody
     ResponseEntity confirm(@RequestBody Code code) {
@@ -48,8 +54,8 @@ public class CreateServiceController {
     }
 
     @RequestMapping("/")
-    @ResponseBody
     String index() {
-        return "Hello World!";
+        return "/WEB-INF/index.jsp";
     }
+
 }
